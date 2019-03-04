@@ -58,6 +58,33 @@ namespace Generics
                 Console.WriteLine("Es ist ein Int");
             }
 
+            Person p = new Person { Vorname = "Tom", Nachname = "Ate", Alter = 10, Kontostand = 100m };
+
+            var alles = p.GibAllesAus();
+
+            string vorname, nachname;
+            (vorname, nachname, _ , _) = p.GibAllesAus(); // _ verwirft nicht benötigte Werte
+
+            #region Suffix für Wertetypen
+            //// Suffix:
+            //// L ->  Long
+            //// M ->  Decimal
+            //// F ->  Float
+            //// U ->  UInt32
+            //// UL -> UInt64
+
+            //var suffix = 12m;
+            //decimal kontostand = 12.5m;
+            //float wert = 12.5F;
+
+            //var uns = 12UL; 
+            #endregion
+
+            for (int i = 0; i < 10_000_000; i++)
+            {
+
+
+            }
 
             Console.WriteLine("---ENDE---");
             Console.ReadKey();
@@ -67,5 +94,19 @@ namespace Generics
         //{
         //    Console.WriteLine($"Ich mache etwas mit {input}");
         //}
+    }
+
+
+    class Person
+    {
+        public string Vorname { get; set; }
+        public string Nachname { get; set; }
+        public byte Alter { get; set; }
+        public decimal Kontostand { get; set; }
+
+        public (string vn, string nn, byte a, decimal k) GibAllesAus()
+        {
+            return (Vorname, Nachname, Alter, Kontostand);
+        }
     }
 }
