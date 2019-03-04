@@ -52,6 +52,13 @@ namespace Generics
 
             Console.WriteLine(gs[0]);
 
+            string text = "123";
+            if(text.IsNumeric())
+            {
+                Console.WriteLine("Es ist ein Int");
+            }
+
+
             Console.WriteLine("---ENDE---");
             Console.ReadKey();
         }
