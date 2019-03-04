@@ -4,17 +4,16 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{56A9F174-3749-4B32-84FA-A7B70B49F27F}</ProjectGuid>
-    <OutputType>Exe</OutputType>
-    <RootNamespace>Taschenrechner</RootNamespace>
-    <AssemblyName>Taschenrechner</AssemblyName>
+    <ProjectGuid>{4B2CEA19-2948-4FB7-8C0A-C416EFA3C115}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Domain</RootNamespace>
+    <AssemblyName>Domain</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
-    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <Deterministic>true</Deterministic>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
@@ -24,7 +23,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
@@ -43,26 +41,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="KonsolenUI.cs" />
-    <Compile Include="Program.cs" />
+    <Compile Include="Formel.cs" />
+    <Compile Include="IParser.cs" />
+    <Compile Include="IRechenoperation.cs" />
+    <Compile Include="IRechner.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="App.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\Domain\Domain.csproj">
-      <Project>{4B2CEA19-2948-4FB7-8C0A-C416EFA3C115}</Project>
-      <Name>Domain</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Logik.FreeFeatures\Logik.FreeFeatures.csproj">
-      <Project>{92ACA551-77EE-4B21-98B4-74CC2CD90628}</Project>
-      <Name>Logik.FreeFeatures</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Logik\Logik.csproj">
-      <Project>{26E80CD9-89DA-488F-831A-757F9B89F12E}</Project>
-      <Name>Logik</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
