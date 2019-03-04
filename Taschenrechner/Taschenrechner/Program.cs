@@ -24,11 +24,14 @@ namespace Taschenrechner
             }
 
             // 2) 
-            var alles = AppDomain.CurrentDomain.GetAssemblies().SelectMany(x => x.GetTypes())
-                                                                .Where(x => typeof(IRechenoperation).IsAssignableFrom(x) &&
-                                                                            x.IsInterface == false && x.IsAbstract == false)
-                                                                .Select(x => (IRechenoperation)Activator.CreateInstance(x))
-                                                                .ToArray();
+            var alles = AppDomain.CurrentDomain.GetAssemblies()
+                                               .Where(x => x.FullName.StartsWith("Logik"))
+                                               .SelectMany(x => x.GetTypes())
+                                               .Where(x => typeof(IRechenoperation).IsAssignableFrom(x) &&
+                                                           x.IsInterface == false && x.IsAbstract == false)
+                                               .Select(x => (IRechenoperation)Activator.CreateInstance(x))
+                                               .ToArray();
+
             var rechner = new ModularerRechner(alles);
             var parser = new RegexParser();
             new KonsolenUI(parser, rechner).Start();
