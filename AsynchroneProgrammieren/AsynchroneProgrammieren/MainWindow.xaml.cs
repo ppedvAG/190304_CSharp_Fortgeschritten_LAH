@@ -47,6 +47,9 @@ namespace AsynchroneProgrammieren
             //labelWert.Content = "Es läuft ....";
             //MessageBox.Show("Ende");
 
+            //ThreadPool.GetMaxThreads(out var worker, out var completionPort);
+            //MessageBox.Show(worker.ToString());
+
             int[] durchgänge = { 100, 500, 750, 1000, 2000, 3000, 5000 };
             Stopwatch watch = new Stopwatch();
             Debug.WriteLine($"SynchronisationContext: {SynchronizationContext.Current == null}");
