@@ -5,8 +5,12 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:AsynchroneProgrammieren"
         mc:Ignorable="d"
-        Title="MainWindow" Height="301.829" Width="503.659">
+        Title="MainWindow" Height="145.829" Width="250.059">
     <Grid>
+        <TextBox HorizontalAlignment="Left" Height="23" Margin="10,10,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="208"/>
+        <Button Click="Button_Click" Content="Klick mich!" HorizontalAlignment="Left" Margin="10,38,0,0" VerticalAlignment="Top" Width="208"/>
+        <ProgressBar x:Name="progressBarWert" HorizontalAlignment="Left" Height="14" Margin="10,62,0,0" VerticalAlignment="Top" Width="208"/>
+        <Label x:Name="labelWert" HorizontalAlignment="Left" Margin="10,81,0,0" VerticalAlignment="Top" Width="208"/>
 
     </Grid>
 </Window>
