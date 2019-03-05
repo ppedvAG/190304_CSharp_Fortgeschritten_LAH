@@ -15,6 +15,20 @@ namespace Threads
             for (int i = 0; i < 10; i++)
                 ThreadPool.QueueUserWorkItem(ZufälligesKontoUpdate, konto);
 
+            #region Mutex
+            //Mutex mutex = new Mutex(false, "MeinMutex");
+            //for (int i = 0; i < 100; i++)
+            //{
+            //    mutex.WaitOne();
+
+            //    Thread.Sleep(100);
+            //    Console.WriteLine(i);
+
+            //    mutex.ReleaseMutex();
+            //} 
+            #endregion
+
+
             Console.WriteLine("---ENDE---");
             Console.ReadKey();
         }
