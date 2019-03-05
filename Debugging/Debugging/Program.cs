@@ -38,7 +38,6 @@ namespace Debugging
             Console.WriteLine(GC.GetGeneration(ding.KleinerString));
             Console.WriteLine(GC.GetGeneration(ding.GroßesDingFürDenLOH));
 
-
             ding = null;
             
             Console.WriteLine("---ENDE---");
