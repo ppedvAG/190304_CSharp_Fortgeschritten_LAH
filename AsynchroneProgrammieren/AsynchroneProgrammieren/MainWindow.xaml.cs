@@ -24,37 +24,40 @@ namespace AsynchroneProgrammieren
         public MainWindow()
         {
             InitializeComponent();
-            TaskIstFertigEvent += TaskIstFertig;
+            // TaskIstFertigEvent += TaskIstFertig;
         }
 
-        // Callback wenn der Task fertig ist
-        private void TaskIstFertig(object sender, EventArgs e)
-        {
-            MessageBox.Show("Ende");
-        }
+        //// Callback wenn der Task fertig ist
+        //private void TaskIstFertig(object sender, EventArgs e)
+        //{
+        //    MessageBox.Show("Ende");
+        //}
 
-        private event EventHandler TaskIstFertigEvent;
+        //private event EventHandler TaskIstFertigEvent;
 
 
-        private void Button_Click(object sender, RoutedEventArgs e)
+        private async void Button_Click(object sender, RoutedEventArgs e)
         {
             MessageBox.Show("Start");
 
-            MachEtwas();
+            await MachEtwas().ConfigureAwait(true); // Standardfall, Bricht mit (false)
 
+            // UI-Thread
             labelWert.Content = "Es läuft ....";
+            MessageBox.Show("Ende");
         }
 
-        private Task MachEtwas()
+        private async Task MachEtwas()
         {
-            return Task.Run(() =>
+            await Task.Run(async () =>
             {
                 for (int i = 0; i <= 100; i++)
                 {
-                    Thread.Sleep(100);
+                    //Thread.Sleep(100);   // Blockiert den Thread
+                    await Task.Delay(100); // Threadpool könnte weitermachen mit einem anderen Thread
                     Dispatcher.Invoke(() => progressBarWert.Value = i);
                 }
-                TaskIstFertigEvent?.Invoke(this, EventArgs.Empty);
+                // TaskIstFertigEvent?.Invoke(this, EventArgs.Empty);
             });
         }
     }
