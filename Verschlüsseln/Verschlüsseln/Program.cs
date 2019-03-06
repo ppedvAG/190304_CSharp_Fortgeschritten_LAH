@@ -42,7 +42,6 @@ namespace Verschlüsseln
                 File.WriteAllText("publicRSA.xml",rsa.ToXmlString(false));
                 File.WriteAllText("privateRSA.xml",rsa.ToXmlString(true));
             }
-
             if(! File.Exists("rsa_text.bin"))
             {
                 rsa.FromXmlString(File.ReadAllText("publicRSA.xml")); // mit pubkey verschlüsseln
@@ -55,6 +54,7 @@ namespace Verschlüsseln
 
             string entschlüsselt = Encoding.Default.GetString(rsa.Decrypt(verschlüsselt, RSAEncryptionPadding.OaepSHA1));
             Console.WriteLine(entschlüsselt);
+
 
             Console.WriteLine("---ENDE---");
             Console.ReadKey();
