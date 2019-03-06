@@ -18,7 +18,7 @@ namespace PLINQ
             Console.WriteLine("Testdaten generieren ....");
             ConcurrentBag<Person> personen = new ConcurrentBag<Person>();
 
-            Parallel.For(0, 1_000_000, i =>
+            Parallel.For(0, 300_000, i =>
              {
                  personen.Add(fix.Create<Person>());
              });
@@ -29,13 +29,29 @@ namespace PLINQ
             DateTime filter = new DateTime(2019, 1, 1, 0, 0,0);
             Stopwatch watch = new Stopwatch();
 
+            personen.Add(null); // Wirft bei x.Geburtsdatum
+
             watch.Start();
-            var ergebnis = personen.AsParallel()
+            var query = personen.AsParallel()
+                                   .WithDegreeOfParallelism(2)
+                                   .WithExecutionMode(ParallelExecutionMode.ForceParallelism)
                                    .Where(x => x.Geburtsdatum < filter)
-                                   .OrderByDescending(x => x.Kontostand)
-                                   .ToArray();
+                                   .OrderByDescending(x => x.Kontostand);
+
+            Person[] ergebnis = null;
+            try
+            {
+                ergebnis = query.ToArray();
+            }
+            catch (AggregateException ex)
+            {
+                foreach (var x in ex.InnerExceptions)
+                {
+                    // Handle
+                }
+            }
             watch.Stop();
-            Console.WriteLine($"Parallel: {ergebnis.Count()} Personen in {watch.ElapsedMilliseconds}ms");
+            Console.WriteLine($"Parallel: {ergebnis.Length} Personen in {watch.ElapsedMilliseconds}ms");
 
             watch.Restart();
             ergebnis = personen.Where(x => x.Geburtsdatum < filter)
