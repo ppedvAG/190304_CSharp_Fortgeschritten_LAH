@@ -13,32 +13,54 @@ namespace Verschlüsseln
         static void Main(string[] args)
         {
             // Erster Aufruf
-            InitBeispiel("dieser Text funktioniert nicht :)");
+            #region AES-Beispiel
+            //InitAESBeispiel("dieser Text funktioniert nicht :)");
 
-            Console.WriteLine("Bitte geben Sie das Passwort zum Entschlüsseln ein:");
-            string passwort = Console.ReadLine();
-            SHA256 sha256 = SHA256.Create();
+            //Console.WriteLine("Bitte geben Sie das Passwort zum Entschlüsseln ein:");
+            //string passwort = Console.ReadLine();
+            //SHA256 sha256 = SHA256.Create();
 
-            AesManaged aes = new AesManaged();
-            aes.Key = sha256.ComputeHash(Encoding.Default.GetBytes(passwort));
-            aes.IV = File.ReadAllBytes("iv.bin");
+            //AesManaged aes = new AesManaged();
+            //aes.Key = sha256.ComputeHash(Encoding.Default.GetBytes(passwort));
+            //aes.IV = File.ReadAllBytes("iv.bin");
 
-            // byte[] verschlüsselt = Verschlüsseln(aes, "asdasd");
-            try
+            //// byte[] verschlüsselt = Verschlüsseln(aes, "asdasd");
+            //try
+            //{
+            //    string entschlüsselt = Entschlüsseln(aes, File.ReadAllBytes("encText.bin"));
+            //    Console.WriteLine(entschlüsselt);
+            //}
+            //catch (CryptographicException)
+            //{
+            //    Console.WriteLine("Ihr Passwort war leider falsch");
+            //} 
+            #endregion
+            var rsa = RSACryptoServiceProvider.Create();
+
+            if(! File.Exists("publicRSA.xml"))
             {
-                string entschlüsselt = Entschlüsseln(aes, File.ReadAllBytes("encText.bin"));
-                Console.WriteLine(entschlüsselt);
+                File.WriteAllText("publicRSA.xml",rsa.ToXmlString(false));
+                File.WriteAllText("privateRSA.xml",rsa.ToXmlString(true));
             }
-            catch (CryptographicException)
+
+            if(! File.Exists("rsa_text.bin"))
             {
-                Console.WriteLine("Ihr Passwort war leider falsch");
+                rsa.FromXmlString(File.ReadAllText("publicRSA.xml")); // mit pubkey verschlüsseln
+                byte[] klartext = Encoding.Default.GetBytes("Das ist mein zu verschlüsselnder Text");
+                File.WriteAllBytes("rsa_verschlüsselt.bin", rsa.Encrypt(klartext, RSAEncryptionPadding.OaepSHA1));
             }
+
+            byte[] verschlüsselt = File.ReadAllBytes("rsa_verschlüsselt.bin");
+            rsa.FromXmlString(File.ReadAllText("privateRSA.xml")); // mit privkey entschlüsseln
+
+            string entschlüsselt = Encoding.Default.GetString(rsa.Decrypt(verschlüsselt, RSAEncryptionPadding.OaepSHA1));
+            Console.WriteLine(entschlüsselt);
 
             Console.WriteLine("---ENDE---");
             Console.ReadKey();
         }
 
-        static void InitBeispiel(string textZumVerschlüsseln)
+        static void InitAESBeispiel(string textZumVerschlüsseln)
         {
             if (!File.Exists("iv.bin"))
             {
