@@ -13,8 +13,8 @@ namespace Dateisystem
         [STAThread]
         static void Main(string[] args)
         {
-            Console.WriteLine("Bitte geben Sie etwas ein:");
-            string eingabe = Console.ReadLine();
+            //Console.WriteLine("Bitte geben Sie etwas ein:");
+            //string eingabe = Console.ReadLine();
 
             #region FileStream
             //FileStream stream = new FileStream("demo.txt", FileMode.Create);
@@ -68,6 +68,18 @@ namespace Dateisystem
             //FolderBrowserDialog dlg = new FolderBrowserDialog();
             //dlg.ShowDialog(); 
             #endregion
+
+            Bruch b1 = new Bruch(1, 2);
+            Bruch b2 = new Bruch(1, 4);
+
+            Bruch ergebnis = b1 * b2;
+            Console.WriteLine($"{ergebnis.Zähler}/{ergebnis.Nenner}");
+
+            List<Bruch> bruchliste = new List<Bruch>{ b2,b1, ergebnis };
+            bruchliste.Sort();
+
+            Bruch test = new Bruch(1, 4);
+            Console.WriteLine(test.Equals(b2));
 
             Console.WriteLine("---ENDE---");
             Console.ReadKey();
